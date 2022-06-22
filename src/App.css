@@ -1,0 +1,20 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: "Atitle2";
+  src: url("./font/Atitle2.ttf");
+}
+
+@font-face {
+  font-family: "ggdc";
+  src: url("./font/ggdc.OTF");
+}
+
+@font-face {
+  font-family: "Atitle1";
+  src: url("./font/Atitle1.ttf");
+}
