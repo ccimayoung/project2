@@ -30,6 +30,7 @@ function PostEditSide() {
   const nav = useNavigate();
 
   const location = useLocation();
+  console.log(location);
   const state = location.state as { oripost: Post };
   const [selectLayout] = useRecoilState(layoutState);
   // 밖에서 selectLayout 바꿈
