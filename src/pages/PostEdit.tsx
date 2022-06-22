@@ -13,6 +13,7 @@ import PostEditSide from "../components/PostLayout/PostEditSide";
 function PostAdd() {
   const location = useLocation();
   const state = location.state as { oripost: Post };
+  console.log(state);
 
   const [selectLayout, setSelectLayout] = useRecoilState(layoutState); //마지막에 저장한거 나옴
   useEffect(() => {
