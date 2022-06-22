@@ -23,7 +23,7 @@ function Join() {
     <BW>
       <Menu />
       <JoinWrap>
-        <img src={join_img} width="330px" />
+        <img src={join_img} width="330px" alt="" />
         <JoinBox>
           <FontBig>회원가입</FontBig>
           <JoinInfo></JoinInfo>

@@ -67,7 +67,7 @@ function Login() {
     <BW>
       <Menu />
       <JoinWrap>
-        <img src={login_img} width="330px" />
+        <img src={login_img} width="330px" alt="" />
         <LoginSmallWrap>
           <LoginBox heightSize={400}>
             <FontBig>로그인</FontBig>
