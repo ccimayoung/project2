@@ -31,17 +31,13 @@ interface props {
   num: number;
 }
 
-function Post_side(props: props) {
+function PostSide(props: props) {
   const [postList] = useRecoilState(postListState);
 
   const { num } = props;
   const nav = useNavigate();
 
   const [heart, setHeart] = useState(false);
-
-  interface dd {
-    count: number;
-  }
 
   const queryClient = useQueryClient();
 
@@ -147,7 +143,7 @@ function Post_side(props: props) {
               </PostTextSidetDiv>
               <PostImgSide>
                 <div>
-                  <img src={v.img_url} width="250px" />
+                  <img src={v.img_url} width="250px" alt="" />
                 </div>
               </PostImgSide>
             </PostImg>
@@ -193,4 +189,4 @@ function Post_side(props: props) {
   );
 }
 
-export default Post_side;
+export default PostSide;

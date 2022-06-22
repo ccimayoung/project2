@@ -1,37 +1,42 @@
 import React, { useState, useRef } from "react";
 import {
   DeleteBtn,
-  ImgPreviewBox,
-  PostBoxSelect,
   PostInfo,
   PostInfoLeft,
   PostInfoPhoto,
   PostInfoRight,
-  TextInput,
   UploadBtn,
 } from "../../Styles/AllStyle";
 import { PostFontBold, PostFontLight } from "../../Styles/Font";
-import { Img, ImgLable, UploadBtnDisable } from "../../Styles/Post_left,Right";
-import { useLocation, useNavigate} from "react-router-dom";
+import {
+  Img,
+  ImgLable,
+  PostBoxSelectSide,
+  PostImgSide,
+  PostImgSideDiv,
+  PostTextSidetDiv,
+  TextInputSide,
+  UploadBtnDisable,
+} from "../../Styles/Post_left,Right";
+import { useNavigate } from "react-router-dom";
 import { PostWriteWrap } from "../../Styles/modal";
+import { useRecoilState } from "recoil";
+import { layoutState } from "../../recoil/store";
 import { useMutation } from "react-query";
 import { boardApi } from "../../Api/callApi";
-import { Post } from "../../Types/Interface";
 
-function PostEdit_Center() {
+function PostWriteSide() {
   const nav = useNavigate();
-
-  const location = useLocation();
-  const state = location.state as { oripost: Post };
+  const [selectLayout] = useRecoilState(layoutState);
 
   const img: any = useRef();
   const onChange = (e: any) => {
     setText(e.target.value);
   };
-  const [text, setText] = useState(state.oripost.content);
+  const [text, setText] = useState();
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState({
-    img_show: state.oripost.img_url,
+    img_show: "",
     img_file: "",
   });
 
@@ -56,14 +61,16 @@ function PostEdit_Center() {
     const formData = new FormData();
     if (fileImage && text) {
       formData.append("img", fileImage.img_file);
-      formData.append("layoutType", "1");
+      formData.append("layoutType", selectLayout === 2 ? "2" : "3");
       formData.append("content", text);
     }
-    editUserData.mutate(formData);
+    writeUserData.mutate(formData);
+    console.log(fileImage);
+    console.log(text);
   };
 
-  const editUserData = useMutation(
-    (formData: FormData) => boardApi.editApi(state.oripost.id, formData),
+  const writeUserData = useMutation(
+    (data: FormData) => boardApi.postWriteApi(data),
     {
       onSuccess: () => {
         nav("/");
@@ -73,12 +80,12 @@ function PostEdit_Center() {
 
   return (
     <PostWriteWrap>
-      <PostBoxSelect>
+      <PostBoxSelectSide>
         <PostInfo>
           <PostInfoLeft>
             <PostInfoPhoto></PostInfoPhoto>
             <PostFontBold marginTop={0} marginLeft={5}>
-              {state.oripost.nickname}
+              ayoung
             </PostFontBold>
           </PostInfoLeft>
           <PostInfoRight>
@@ -116,37 +123,43 @@ function PostEdit_Center() {
             )}
           </PostInfoRight>
         </PostInfo>
-        <ImgPreviewBox>
-          {fileImage ? (
-            ""
-          ) : (
-            <PostFontLight style={{ margin: "auto" }}>
-              {" "}
-              "📷사진 업로드를 클릭!"{" "}
-            </PostFontLight>
-          )}
-          {fileImage && (
-            <Img
-              alt="sample"
-              src={fileImage.img_show}
-              style={{ margin: "auto" }}
-            />
-          )}
-        </ImgPreviewBox>
-        <TextInput
-          value={text}
-          onChange={onChange}
-          placeholder="내용을 입력하세요."
-        ></TextInput>
+        <PostImgSideDiv
+          layoutStyle={selectLayout === 2 ? "row-reverse" : "row"}
+        >
+          <PostTextSidetDiv>
+            <TextInputSide
+              value={text}
+              onChange={onChange}
+              placeholder="오늘의 기록 남기기"
+            ></TextInputSide>
+          </PostTextSidetDiv>
+          <PostImgSide>
+            {fileImage.img_show ? (
+              ""
+            ) : (
+              <PostFontLight style={{ margin: "auto" }}>
+                {" "}
+                "📷사진 업로드를 클릭!"{" "}
+              </PostFontLight>
+            )}
+            {fileImage.img_show && (
+              <Img
+                alt="sample"
+                src={fileImage.img_show}
+                style={{ margin: "auto" }}
+              />
+            )}
+          </PostImgSide>
+        </PostImgSideDiv>
 
         {fileImage && text ? (
-          <UploadBtn onClick={onSubmit}>💙수정완료💙</UploadBtn>
+          <UploadBtn onClick={onSubmit}>💙업로드💙</UploadBtn>
         ) : (
-          <UploadBtnDisable>수정완료</UploadBtnDisable>
+          <UploadBtnDisable>업로드</UploadBtnDisable>
         )}
-      </PostBoxSelect>
+      </PostBoxSelectSide>
     </PostWriteWrap>
   );
 }
 
-export default PostEdit_Center;
+export default PostWriteSide;

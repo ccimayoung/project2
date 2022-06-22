@@ -11,7 +11,7 @@ import {
   JoinBtnDisable,
 } from "../Styles/Join,Login";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import axios from "axios";
 
 // 보내기
@@ -41,7 +41,7 @@ export function JoinInfo() {
   const rePass: any = useRef();
   const CheckEmail = (asValue: any) => {
     var regExp =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     return regExp.test(asValue);
   };
   const CheckPassword = (asValue: any) => {

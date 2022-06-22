@@ -12,24 +12,26 @@ import {
 } from "../../Styles/AllStyle";
 import { PostFontBold, PostFontLight } from "../../Styles/Font";
 import { Img, ImgLable, UploadBtnDisable } from "../../Styles/Post_left,Right";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PostWriteWrap } from "../../Styles/modal";
-import { useRecoilState } from "recoil";
-import { postListState } from "../../recoil/store";
 import { useMutation } from "react-query";
 import { boardApi } from "../../Api/callApi";
+import { Post } from "../../Types/Interface";
 
-function PostWrite_Center() {
+function PostEditCenter() {
   const nav = useNavigate();
+
+  const location = useLocation();
+  const state = location.state as { oripost: Post };
 
   const img: any = useRef();
   const onChange = (e: any) => {
     setText(e.target.value);
   };
-  const [text, setText] = useState();
+  const [text, setText] = useState(state.oripost.content);
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState({
-    img_show: "",
+    img_show: state.oripost.img_url,
     img_file: "",
   });
 
@@ -57,11 +59,11 @@ function PostWrite_Center() {
       formData.append("layoutType", "1");
       formData.append("content", text);
     }
-    writeUserData.mutate(formData);
+    editUserData.mutate(formData);
   };
 
-  const writeUserData = useMutation(
-    (data: FormData) => boardApi.postWriteApi(data),
+  const editUserData = useMutation(
+    (formData: FormData) => boardApi.editApi(state.oripost.id, formData),
     {
       onSuccess: () => {
         nav("/");
@@ -75,7 +77,9 @@ function PostWrite_Center() {
         <PostInfo>
           <PostInfoLeft>
             <PostInfoPhoto></PostInfoPhoto>
-            <PostFontBold marginTop={0} marginLeft={5}></PostFontBold>
+            <PostFontBold marginTop={0} marginLeft={5}>
+              {state.oripost.nickname}
+            </PostFontBold>
           </PostInfoLeft>
           <PostInfoRight>
             <ImgLable
@@ -113,7 +117,7 @@ function PostWrite_Center() {
           </PostInfoRight>
         </PostInfo>
         <ImgPreviewBox>
-          {fileImage.img_show ? (
+          {fileImage ? (
             ""
           ) : (
             <PostFontLight style={{ margin: "auto" }}>
@@ -121,7 +125,7 @@ function PostWrite_Center() {
               "📷사진 업로드를 클릭!"{" "}
             </PostFontLight>
           )}
-          {fileImage.img_show && (
+          {fileImage && (
             <Img
               alt="sample"
               src={fileImage.img_show}
@@ -136,13 +140,13 @@ function PostWrite_Center() {
         ></TextInput>
 
         {fileImage && text ? (
-          <UploadBtn onClick={onSubmit}>💙업로드💙</UploadBtn>
+          <UploadBtn onClick={onSubmit}>💙수정완료💙</UploadBtn>
         ) : (
-          <UploadBtnDisable>업로드</UploadBtnDisable>
+          <UploadBtnDisable>수정완료</UploadBtnDisable>
         )}
       </PostBoxSelect>
     </PostWriteWrap>
   );
 }
 
-export default PostWrite_Center;
+export default PostEditCenter;

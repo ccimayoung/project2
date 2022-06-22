@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { CheckFont, PostFontBold } from "../Styles/Font";
-import { useNavigate } from "react-router-dom";
+
 import {
   ModalBox,
   ModalCheckDiv,
@@ -42,7 +42,7 @@ function ModalFormSelect(props: props): ReactElement {
           <ModalLayout>
             <ModalCheckLayoutDiv>
               <ModalLayoutPhotoDiv>
-                <img src={ExPostCenter} width="180px" />
+                <img src={ExPostCenter} width="180px" alt="" />
               </ModalLayoutPhotoDiv>
             </ModalCheckLayoutDiv>
             <ModalCheckDiv>
@@ -62,7 +62,7 @@ function ModalFormSelect(props: props): ReactElement {
           <ModalLayout>
             <ModalCheckLayoutDiv>
               <ModalLayoutPhotoDiv>
-                <img src={ExPostLeft} width="180px" />
+                <img src={ExPostLeft} width="180px" alt="" />
               </ModalLayoutPhotoDiv>
             </ModalCheckLayoutDiv>
             <ModalCheckDiv>
@@ -83,7 +83,7 @@ function ModalFormSelect(props: props): ReactElement {
           <ModalLayout>
             <ModalCheckLayoutDiv>
               <ModalLayoutPhotoDiv>
-                <img src={ExPostRight} width="180px" />
+                <img src={ExPostRight} width="180px" alt="" />
               </ModalLayoutPhotoDiv>
             </ModalCheckLayoutDiv>
             <ModalCheckDiv>

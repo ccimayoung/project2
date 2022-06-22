@@ -14,7 +14,6 @@ import {
 } from "../Styles/Join,Login";
 import login_img from "../assets/login_img.jpg";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useMutation } from "react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { tokenState } from "../recoil/store";

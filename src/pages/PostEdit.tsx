@@ -5,10 +5,10 @@ import { ModalBtnBox } from "../Styles/modal";
 import OrderList from "../components/OrderList";
 import { useRecoilState } from "recoil";
 import { layoutState } from "../recoil/store";
-import PostEdit_Center from "../components/PostLayout/PostEdit_Center";
-import PostEdit_side from "../components/PostLayout/PostEdit_side";
 import { Post } from "../Types/Interface";
 import { Menu } from "antd";
+import PostEditCenter from "../components/PostLayout/PostEditCenter";
+import PostEditSide from "../components/PostLayout/PostEditSide";
 
 function PostAdd() {
   const location = useLocation();
@@ -27,11 +27,11 @@ function PostAdd() {
         <OrderList />
       </ModalBtnBox>
       {selectLayout === 1 ? (
-        <PostEdit_Center />
+        <PostEditCenter />
       ) : selectLayout === 2 ? (
-        <PostEdit_side />
+        <PostEditSide />
       ) : selectLayout === 3 ? (
-        <PostEdit_side />
+        <PostEditSide />
       ) : (
         <PostBox>레이아웃을 선택해주세요</PostBox>
       )}

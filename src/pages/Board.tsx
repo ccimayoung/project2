@@ -1,6 +1,4 @@
 import React from "react";
-import Post_Center from "../components/PostLayout/Post_Center";
-import Post_side from "../components/PostLayout/Post_side";
 import { PostWrap, AW, PostUploadBox } from "../Styles/AllStyle";
 import { BsInstagram } from "react-icons/bs";
 import { PostFontBold, TitleFont } from "../Styles/Font";
@@ -10,6 +8,8 @@ import { useRecoilState } from "recoil";
 import { useQuery } from "react-query";
 import axios from "axios";
 import Menu from "../components/Menu";
+import PostCenter from "../components/PostLayout/PostCenter";
+import PostSide from "../components/PostLayout/PostSide";
 
 const getPostList = () => {
   return axios.get("http://13.209.65.162/api/boards");
@@ -23,7 +23,7 @@ function Board() {
     //여기서 리코일에 저장
     onSuccess: (data: any) => {
       setPostList(data.data);
-      console.log(postList);
+      console.log(getpost_query);
     },
   });
 
@@ -33,11 +33,11 @@ function Board() {
       <PostWrap>
         {postList.map((Post, id) => {
           return Post.layoutType === 1 ? (
-            <Post_Center key={id} num={id} />
+            <PostCenter key={id} num={id} />
           ) : Post.layoutType === 2 ? (
-            <Post_side key={id} num={id} />
+            <PostSide key={id} num={id} />
           ) : (
-            <Post_side key={id} num={id} />
+            <PostSide key={id} num={id} />
           );
         })}
       </PostWrap>

@@ -1,9 +1,9 @@
 import React from "react";
 import { AW, PostBox } from "../Styles/AllStyle";
-import PostWrite_Center from "../components/PostLayout/PostWrite_Center";
+import PostWriteCenter from "../components/PostLayout/PostWriteCenter";
 import { ModalBtnBox } from "../Styles/modal";
 import OrderList from "../components/OrderList";
-import PostWrite_side from "../components/PostLayout/PostWrite_side";
+import PostWriteSide from "../components/PostLayout/PostWriteSide";
 
 import { useRecoilState } from "recoil";
 import { layoutState } from "../recoil/store";
@@ -20,11 +20,11 @@ function PostAdd() {
       </ModalBtnBox>
 
       {selectLayout === 1 ? (
-        <PostWrite_Center />
+        <PostWriteCenter />
       ) : selectLayout === 2 ? (
-        <PostWrite_side />
+        <PostWriteSide />
       ) : selectLayout === 3 ? (
-        <PostWrite_side />
+        <PostWriteSide />
       ) : (
         <PostBox>레이아웃을 선택해주세요</PostBox>
       )}

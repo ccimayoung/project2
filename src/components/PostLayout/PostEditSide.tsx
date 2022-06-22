@@ -18,25 +18,30 @@ import {
   TextInputSide,
   UploadBtnDisable,
 } from "../../Styles/Post_left,Right";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PostWriteWrap } from "../../Styles/modal";
 import { useRecoilState } from "recoil";
 import { layoutState } from "../../recoil/store";
+import { Post } from "../../Types/Interface";
 import { useMutation } from "react-query";
 import { boardApi } from "../../Api/callApi";
 
-function PostWrite_side() {
+function PostEditSide() {
   const nav = useNavigate();
+
+  const location = useLocation();
+  const state = location.state as { oripost: Post };
   const [selectLayout] = useRecoilState(layoutState);
+  // 밖에서 selectLayout 바꿈
 
   const img: any = useRef();
   const onChange = (e: any) => {
     setText(e.target.value);
   };
-  const [text, setText] = useState();
+  const [text, setText] = useState(state.oripost.content);
   //파일 미리볼 url을 저장해줄 state
   const [fileImage, setFileImage] = useState({
-    img_show: "",
+    img_show: state.oripost.img_url,
     img_file: "",
   });
 
@@ -61,16 +66,14 @@ function PostWrite_side() {
     const formData = new FormData();
     if (fileImage && text) {
       formData.append("img", fileImage.img_file);
-      formData.append("layoutType", selectLayout === 2 ? "2" : "3");
+      formData.append("layoutType", selectLayout.toString());
       formData.append("content", text);
     }
-    writeUserData.mutate(formData);
-    console.log(fileImage);
-    console.log(text);
+    editUserData.mutate(formData);
   };
 
-  const writeUserData = useMutation(
-    (data: FormData) => boardApi.postWriteApi(data),
+  const editUserData = useMutation(
+    (formData: FormData) => boardApi.editApi(state.oripost.id, formData),
     {
       onSuccess: () => {
         nav("/");
@@ -134,7 +137,7 @@ function PostWrite_side() {
             ></TextInputSide>
           </PostTextSidetDiv>
           <PostImgSide>
-            {fileImage.img_show ? (
+            {fileImage ? (
               ""
             ) : (
               <PostFontLight style={{ margin: "auto" }}>
@@ -142,7 +145,7 @@ function PostWrite_side() {
                 "📷사진 업로드를 클릭!"{" "}
               </PostFontLight>
             )}
-            {fileImage.img_show && (
+            {fileImage && (
               <Img
                 alt="sample"
                 src={fileImage.img_show}
@@ -153,13 +156,13 @@ function PostWrite_side() {
         </PostImgSideDiv>
 
         {fileImage && text ? (
-          <UploadBtn onClick={onSubmit}>💙업로드💙</UploadBtn>
+          <UploadBtn onClick={onSubmit}>💙수정완료💙</UploadBtn>
         ) : (
-          <UploadBtnDisable>업로드</UploadBtnDisable>
+          <UploadBtnDisable>수정완료</UploadBtnDisable>
         )}
       </PostBoxSelectSide>
     </PostWriteWrap>
   );
 }
 
-export default PostWrite_side;
+export default PostEditSide;

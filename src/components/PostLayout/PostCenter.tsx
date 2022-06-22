@@ -9,11 +9,11 @@ import {
   PostInfoLeft,
   PostInfoPhoto,
   PostInfoRight,
-} from "./../../Styles/AllStyle";
+} from "../../Styles/AllStyle";
 
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { PostFontBold, PostFontLight } from "./../../Styles/Font";
+import { PostFontBold, PostFontLight } from "../../Styles/Font";
 import { useNavigate } from "react-router-dom";
 import HeartAni from "../HeartAni";
 import { postListState } from "../../recoil/store";
@@ -31,7 +31,7 @@ interface props {
   num: number;
 }
 
-function Post_Center(props: props) {
+function PostCenter(props: props) {
   const [postList] = useRecoilState(postListState);
   console.log(postList);
 
@@ -39,10 +39,6 @@ function Post_Center(props: props) {
   const nav = useNavigate();
 
   const [heart, setHeart] = useState(false);
-
-  interface dd {
-    count: number;
-  }
 
   const queryClient = useQueryClient();
 
@@ -133,7 +129,7 @@ function Post_Center(props: props) {
               ) : null}
             </PostInfo>
             <PostImg layoutStyle="row">
-              <img src={v.img_url} width="450px" />
+              <img src={v.img_url} width="450px" alt="" />
               {heart ? <HeartAni /> : null}
             </PostImg>
             <PostHeartLine>
@@ -183,4 +179,4 @@ function Post_Center(props: props) {
   );
 }
 
-export default Post_Center;
+export default PostCenter;
