@@ -33,6 +33,7 @@ interface props {
 
 function Post_Center(props: props) {
   const [postList] = useRecoilState(postListState);
+  console.log(postList);
 
   const { num } = props;
   const nav = useNavigate();
