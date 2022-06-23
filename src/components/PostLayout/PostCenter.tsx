@@ -23,10 +23,6 @@ import { useMutation, useQueryClient } from "react-query";
 import Swal from "sweetalert2";
 import { jwtUtils } from "../../utils/jwtUtils";
 
-// const getPostList = (board: board) => {
-//   return axios.get("http://13.209.65.162/api/boards");
-// };
-
 interface props {
   num: number;
 }
